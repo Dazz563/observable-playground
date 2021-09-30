@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -23,6 +24,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatInputModule,
     MatIconModule,
     MatMenuModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatToolbarModule,
@@ -33,6 +35,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatInputModule,
     MatIconModule,
     MatMenuModule,
+    MatAutocompleteModule,
   ],
 })
 export class SharedModule { }

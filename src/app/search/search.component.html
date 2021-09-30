@@ -1,0 +1,30 @@
+<h1>RxJs 6 Autocomplete with Material</h1>
+
+<mat-form-field appearance="outline">
+    <mat-label>Search in Wikipedia</mat-label>
+    <input type="text"
+           aria-label="Number"
+           matInput
+           #searchInput
+           [matAutocomplete]="auto">
+
+    <button matSuffix
+            *ngIf="loadingIcon"
+            type="button"
+            mat-icon-button
+            aria-label=""
+            class="iconLoader">
+        <mat-icon color="primary">
+            motion_photos_on
+        </mat-icon>
+    </button>
+
+    <mat-autocomplete autoActiveFirstOption
+                      #auto="matAutocomplete">
+        <mat-option *ngFor="let result of searchResults; let i = index"
+                    (click)="onItemClick(result)"
+                    [value]="result">
+            {{result}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

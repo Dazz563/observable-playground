@@ -10,6 +10,8 @@ import { ProductsComponent } from './products/products.component';
 import { ManageUsersComponent } from './users/manage-users/manage-users.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeleteUsersComponent } from './users/delete-users/delete-users.component';
+import { SearchComponent } from './search/search.component';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { DeleteUsersComponent } from './users/delete-users/delete-users.componen
     UsersComponent,
     ProductsComponent,
     ManageUsersComponent,
-    DeleteUsersComponent
+    DeleteUsersComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,8 @@ import { DeleteUsersComponent } from './users/delete-users/delete-users.componen
     BrowserAnimationsModule,
     SharedModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
   ],
   exports: [
   ],

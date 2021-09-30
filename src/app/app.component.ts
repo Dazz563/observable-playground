@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, concat, interval, merge, Observable, of, Subject } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, concat, from, interval, merge, Observable, of, Subject } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Users, UsersService } from './services/users.service';
 
 @Component({
@@ -10,14 +10,12 @@ import { Users, UsersService } from './services/users.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-
-  ) {
-
-  }
+  constructor() { }
 
 
   ngOnInit(): void {
+
+
 
   }
 
