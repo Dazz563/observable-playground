@@ -69,6 +69,11 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item
+                            (click)="viewUser(user)">
+                        <mat-icon>visibility</mat-icon>
+                        <span>View</span>
+                    </button>
+                    <button mat-menu-item
                             (click)="editUser(user)">
                         <mat-icon>edit</mat-icon>
                         <span>Update</span>

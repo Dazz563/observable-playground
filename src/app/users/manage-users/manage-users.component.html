@@ -5,7 +5,7 @@
           (ngSubmit)="onSubmit()">
         <div mat-dialog-content>
 
-            <p>Please add your new users information!</p>
+            <p>{{ message}}</p>
             <mat-form-field appearance="outline">
                 <mat-label>Name</mat-label>
                 <input type="text"
@@ -50,8 +50,9 @@
                     mat-dialog-close>Cancel
             </button>
             <button mat-button
+                    *ngIf="!isView"
                     type="submit"
-                    cdkFocusInitial>Create
+                    cdkFocusInitial>{{ btnName }}
             </button>
         </div>
     </form>

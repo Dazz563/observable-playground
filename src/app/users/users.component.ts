@@ -44,6 +44,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       width: '500px',
       data: {
         title: `ADD NEW USER`,
+        message: `Please add your new users information!`,
+        btnName: `Create`,
       }
     });
 
@@ -58,7 +60,37 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
+  viewUser(user: Users) {
+    const dialogRef = this.dialog.open(ManageUsersComponent, {
+      width: '500px',
+      data: {
+        title: `VIEW USER`,
+        message: `View your users information`,
+        isView: true,
+        user: user,
+      }
+    });
+  }
+
   editUser(user: Users) {
+    const dialogRef = this.dialog.open(ManageUsersComponent, {
+      width: '500px',
+      data: {
+        title: `UPDATE USER`,
+        message: `Update your users information`,
+        btnName: `Update`,
+        user: user,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((editedUser: Users) => {
+      if (editedUser) {
+        console.log('The dialog was closed', editedUser);
+        this.usersService._updateUser(editedUser).subscribe(
+          () => { }
+        )
+      }
+    });
 
   }
 

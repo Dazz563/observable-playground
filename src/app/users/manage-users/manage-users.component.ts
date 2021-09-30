@@ -11,7 +11,10 @@ import { Users } from 'src/app/services/users.service';
 export class ManageUsersComponent implements OnInit {
 
   title: string;
+  message: string;
+  btnName: string;
   newUserForm: FormGroup;
+  isView: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<ManageUsersComponent>,
@@ -19,15 +22,25 @@ export class ManageUsersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title = this.data.title
+    this.title = this.data.title;
+    this.message = this.data.message;
+    this.btnName = this.data.btnName;
+    this.isView = this.data.isView;
 
     this.newUserForm = new FormGroup({
+      id: new FormControl(null),
       name: new FormControl(null),
       surname: new FormControl(null),
       age: new FormControl(null),
       email: new FormControl(null),
       contact: new FormControl(null),
     })
+    if (this.data.user) {
+      this.newUserForm.patchValue(this.data.user);
+    }
+    if (this.isView) {
+      this.newUserForm.disable()
+    }
   }
 
   onSubmit() {
@@ -36,6 +49,7 @@ export class ManageUsersComponent implements OnInit {
     // console.log('Here is your new user: ', newUser);
 
     this.dialogRef.close(newUser);
+
   }
 
 }

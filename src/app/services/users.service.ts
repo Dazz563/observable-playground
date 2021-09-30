@@ -66,11 +66,23 @@ export class UsersService {
     return this.users$.asObservable();
   }
 
-  _getUser(id: number) {
+  _getUser(id: number): Observable<Users> {
     return this._getUsers().pipe(
       take(1),
       map((users: Users[]) => {
         return users.find(u => u.id === id);
+      })
+    )
+  }
+
+  _updateUser(updatedUser: Users) {
+    return this._getUsers().pipe(
+      take(1),
+      tap((users: Users[]) => {
+        const updatedUserIndex = users.findIndex(user => user.id === updatedUser.id);
+        const updatedUsers = [...users];
+        updatedUsers.splice(updatedUserIndex, 1, updatedUser);
+        this.users$.next(updatedUsers);
       })
     )
   }
@@ -84,7 +96,7 @@ export class UsersService {
     )
   }
 
-  _deleteUser(userId: number) {
+  _deleteUser(userId: number): Observable<Users[]> {
     return this._getUsers().pipe(
       take(1),
       tap((users: Users[]) => {
