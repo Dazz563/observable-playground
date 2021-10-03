@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
-import { tap, take } from 'rxjs/operators';
-import { UsersService, Users } from '../services/users.service';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { from, fromEvent, interval, Observable, of, range, throwError } from 'rxjs';
+import { tap, take, mergeMap, map, pluck, filter, catchError, takeLast, switchMap } from 'rxjs/operators';
+import { OutletModel, ProductModel, ProductService } from '../services/product.service';
+import { LoadingSpinner } from '../shared/utils';
 
 @Component({
   selector: 'app-products',
@@ -10,30 +13,65 @@ import { UsersService, Users } from '../services/users.service';
 })
 export class ProductsComponent implements OnInit {
 
+  products: ProductModel[];
+
   constructor(
-    private usersService: UsersService,
+    private productService: ProductService,
+    public loadingSpinner: LoadingSpinner,
   ) { }
 
   ngOnInit(): void {
-    // this.usersService._getUsers().pipe(
-    //   tap(() => interval(1000).pipe(take(11)).subscribe(
-    //     // tap(() => interval(1000).subscribe(
 
-    //     (val) => console.log(val),
+    const prodObs = this.productService._getProducts();
+    const outletObs = this.productService._getOutlets();
 
-    //     (err) => console.log(err),
+    this.loadingSpinner.setLoadingSpinner(prodObs);
 
-    //     () => console.log('Observable complete!')
-    //   )),
+    const combined = prodObs.pipe(
+      switchMap((prods: ProductModel[]) => {
+        return outletObs
+          .pipe(
+            tap((outlets: OutletModel[]) => {
+              console.log('Here are you switchMapped products: ', prods);
+              console.log('Here are you switchMapped outlets: ', outlets);
+
+              this.products = prods;
+
+            })
+          );
+      })
+    )
+    combined.subscribe()
+
+    // const users$ = from([
+    //   {
+    //     name: 'Darren',
+    //     surname: 'Nienaber',
+    //     age: 35,
+    //   },
+    //   {
+    //     name: 'Miguel',
+    //     surname: 'Alves',
+    //     age: 30,
+    //   },
+    // ]
+    // );
+
+    // users$.pipe(
+    //   pluck('name'),
     // )
-    //   .subscribe(
+    //   .subscribe(val => console.log(val));
 
-    //     (users: Users[]) => console.log('Here are your users: ', users),
 
-    //     (err) => console.log(err),
 
-    //     () => console.log('Observable complete!')
-    //   );
+    // const clicks = fromEvent(document, 'click');
+    // const tagNames = clicks.pipe(pluck('target', 'tagName'));
+    // tagNames.subscribe(x => console.log(x));
   }
+
+
+
+
+
 
 }

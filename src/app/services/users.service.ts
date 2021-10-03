@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, take, tap } from 'rxjs/operators';
+import { delay, filter, map, take, tap } from 'rxjs/operators';
 
 export class Users {
   id: number;
@@ -57,7 +57,8 @@ export class UsersService {
       email: 'test4@gmail.com',
       contact: '0785953688'
     },
-  ])
+  ]);
+  getUsers$ = this.users$.asObservable();
 
   constructor() { }
 

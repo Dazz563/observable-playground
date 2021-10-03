@@ -1,7 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { map, filter, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
   searchResults = [];
 
   constructor(
-    private http: HttpClient,
+    private searchSearvice: SearchService,
   ) { }
 
 
@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
         tap(() => this.loadingIcon = true),
         debounceTime(500),
         distinctUntilChanged(),
-        switchMap((search) => this.getWikiSearchResults(search)),
+        switchMap((search) => this.searchSearvice._getWikiSearchResults(search)),
 
       ).subscribe(response => {
         console.log('search results: ', response)
@@ -42,18 +42,7 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  getWikiSearchResults(search: string) {
 
-    const wikiUrl = 'http://en.wikipedia.org/w/api.php?';
-    const params = new HttpParams()
-      .set('action', 'opensearch')
-      .set('format', 'json')
-      .set('search', search)
-
-    const searchUrl: string = wikiUrl + params.toString();
-
-    return this.http.jsonp(searchUrl, 'callback');
-  }
 
   onItemClick(option: string) {
     console.log('On Item click: ', option);

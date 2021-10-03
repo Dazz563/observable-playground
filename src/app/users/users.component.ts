@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { interval, Subscription } from 'rxjs';
+import { interval, Observable, Subscription } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { UsersService, Users } from '../services/users.service';
 import { DeleteUsersComponent } from './delete-users/delete-users.component';
@@ -12,11 +12,10 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'surname', 'age', 'email', 'contact', 'actions'];
-  dataSource = new MatTableDataSource<Users>();
-  usersSub: Subscription
+  users$: Observable<Users[]>;
 
   constructor(
     private usersService: UsersService,
@@ -25,18 +24,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.usersSub = this.usersService._getUsers()
-      .subscribe(
-
-        (users: Users[]) => {
-          console.log('Here are your users: ', users);
-          this.dataSource.data = users
-        },
-
-        (err) => console.log(err),
-
-        () => console.log('Observable complete!')
-      );
+    this.users$ = this.usersService.getUsers$;
   }
 
   addUser() {
@@ -112,13 +100,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       }
     });
 
-  }
-
-  ngOnDestroy(): void {
-    if (this.usersSub) {
-      this.usersSub.unsubscribe();
-      console.log('ngOnDestroy initialized')
-    }
   }
 }
 

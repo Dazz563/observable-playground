@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DeleteUsersComponent } from './users/delete-users/delete-users.component';
 import { SearchComponent } from './search/search.component';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { CarsComponent } from './cars/cars.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
     ProductsComponent,
     ManageUsersComponent,
     DeleteUsersComponent,
-    SearchComponent
+    SearchComponent,
+    CarsComponent
   ],
   imports: [
     BrowserModule,
